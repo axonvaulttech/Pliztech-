@@ -25,6 +25,24 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
+### Creating a new screen (template pattern)
+
+Use the shared `Screen` component for consistent safe area, background, and padding:
+
+1. Add a new route file under `app/`, e.g. `app/welcome.tsx`.
+2. Import and use `Screen` from `@/components/Screen`:
+   ```tsx
+   import { Screen } from '@/components/Screen';
+   export default function Welcome() {
+     return (
+       <Screen backgroundColor="#FFFFFF" scrollable={false}>
+         <Text>Your content</Text>
+       </Screen>
+     );
+   }
+   ```
+3. Use `centerVertical` for centered auth/splash-style layouts; use `scrollable` for long content; use `header` for a top slot.
+
 ## Get a fresh project
 
 When you're ready, run:
