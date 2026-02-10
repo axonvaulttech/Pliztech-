@@ -14,12 +14,15 @@ export interface PageDotsProps {
   total: number;
   activeIndex: number;
   accessibilityLabel?: string;
+  /** Active pill/dot color (default: #2D3748). Use e.g. #2E8BEA for blue. */
+  activeColor?: string;
 }
 
 export function PageDots({
   total,
   activeIndex,
   accessibilityLabel = `Page ${activeIndex + 1} of ${total}`,
+  activeColor = COLORS.active,
 }: PageDotsProps) {
   return (
     <View
@@ -32,7 +35,7 @@ export function PageDots({
           key={i}
           style={[
             i === activeIndex ? styles.pill : styles.dot,
-            i === activeIndex ? { backgroundColor: COLORS.active } : { backgroundColor: COLORS.inactive },
+            i === activeIndex ? { backgroundColor: activeColor } : { backgroundColor: COLORS.inactive },
           ]}
         />
       ))}

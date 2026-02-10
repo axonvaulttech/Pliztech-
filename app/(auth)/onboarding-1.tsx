@@ -1,5 +1,5 @@
-import { router } from 'expo-router';
 import { Image } from 'expo-image';
+import { router } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { PageDots } from '@/components/PageDots';
@@ -7,7 +7,7 @@ import { PrimaryButton } from '@/components/PrimaryButton';
 import { Screen } from '@/components/Screen';
 import { SecondaryButton } from '@/components/SecondaryButton';
 
-const BACKGROUND = '#E5F3FC';
+const BACKGROUND = '#FFFFFF';
 const TITLE_COLOR = '#212529';
 const BODY_COLOR = '#566C80';
 
@@ -77,11 +77,13 @@ export default function Onboarding1Screen() {
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
+    // flexDirection: 'column',
+    justifyContent: 'space-around',
     paddingVertical: 8,
   },
   heroSection: {
-    flex: 1,
+    // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: 200,

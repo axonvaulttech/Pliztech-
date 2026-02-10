@@ -8,7 +8,7 @@ import { Screen } from '@/components/Screen';
 
 const HERO_IMAGE = require('@/assets/images/onboarding/onboarding-2-hero.png');
 
-const BACKGROUND = '#E5F3FC';
+const BACKGROUND = '#FFFFFF';
 const TITLE_COLOR = '#212529';
 const BODY_COLOR = '#566C80';
 
@@ -66,11 +66,12 @@ export default function Onboarding2Screen() {
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
+    justifyContent: 'space-around',
     paddingVertical: 8,
   },
   heroSection: {
-    flex: 1,
+    // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: 200,
