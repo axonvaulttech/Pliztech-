@@ -19,6 +19,8 @@ export interface FormTextInputProps
   secureTextEntry?: boolean;
   onToggleSecure?: () => void;
   error?: string;
+  /** Hint text below input (lighter gray, for guidance) */
+  hint?: string;
   containerStyle?: ComponentProps<View>['style'];
 }
 
@@ -29,6 +31,7 @@ export function FormTextInput({
   secureTextEntry = false,
   onToggleSecure,
   error,
+  hint,
   containerStyle,
   accessibilityLabel = label,
   ...inputProps
@@ -58,6 +61,7 @@ export function FormTextInput({
           placeholderTextColor={BODY_COLOR}
           secureTextEntry={secureTextEntry}
           accessibilityLabel={accessibilityLabel}
+          showSoftInputOnFocus={true}
           {...inputProps}
         />
         {showEyeToggle ? (
@@ -78,6 +82,7 @@ export function FormTextInput({
         ) : null}
       </View>
       {error ? <Text style={styles.error}>{error}</Text> : null}
+      {hint && !error ? <Text style={styles.hint}>{hint}</Text> : null}
     </View>
   );
 }
@@ -129,6 +134,11 @@ const styles = StyleSheet.create({
   error: {
     fontSize: 12,
     color: ERROR_COLOR,
+    marginTop: 6,
+  },
+  hint: {
+    fontSize: 12,
+    color: BODY_COLOR,
     marginTop: 6,
   },
 });

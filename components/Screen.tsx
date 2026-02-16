@@ -1,5 +1,7 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
   StyleSheet,
   View,
@@ -78,18 +80,25 @@ export function Screen({
     <View style={containerStyle}>
       {header != null ? <View style={styles.header}>{header}</View> : null}
       {scrollable ? (
-        <ScrollView
+        <KeyboardAvoidingView
           style={styles.scroll}
-          contentContainerStyle={[
-            contentContainerStyle,
-            contentStyle,
-            centerVertical && styles.scrollCenter,
-          ]}
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
         >
-          {children}
-        </ScrollView>
+          <ScrollView
+            style={styles.scroll}
+            contentContainerStyle={[
+              contentContainerStyle,
+              contentStyle,
+              centerVertical && styles.scrollCenter,
+            ]}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="on-drag"
+          >
+            {children}
+          </ScrollView>
+        </KeyboardAvoidingView>
       ) : (
         content
       )}

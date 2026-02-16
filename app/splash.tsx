@@ -1,4 +1,6 @@
 import { Image } from 'expo-image';
+import { router } from 'expo-router';
+import { useEffect, useRef } from 'react';
 import { ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
 
 import { Screen } from '@/components/Screen';
@@ -25,26 +27,23 @@ const FONT = {
   footerWeight: '400' as const,
 };
 
-// Optional: timed navigation (uncomment to enable after 2s -> welcome or feed)
-// const SPLASH_DURATION_MS = 2000;
-// const NEXT_ROUTE = '/(auth)/welcome'; // or '/(tabs)/feed'
+const SPLASH_DURATION_MS = 2000;
+const NEXT_ROUTE = '/(public)/welcome';
 
 // Logo asset. Project has pliz-logo.png; use pliz-logo.jpg if you add it under assets/images/
 const LOGO_SOURCE: ImageSourcePropType = require('@/assets/images/pliz-logo.png');
 
 export default function SplashScreen() {
-  // Optional timed navigation: uncomment and add: import { router } from 'expo-router';
-  // import { useEffect, useRef } from 'react';
-  // Then uncomment SPLASH_DURATION_MS + NEXT_ROUTE above and this effect:
-  // const hasNavigated = useRef(false);
-  // useEffect(() => {
-  //   const t = setTimeout(() => {
-  //     if (hasNavigated.current) return;
-  //     hasNavigated.current = true;
-  //     router.replace(NEXT_ROUTE as any);
-  //   }, SPLASH_DURATION_MS);
-  //   return () => clearTimeout(t);
-  // }, []);
+  const hasNavigated = useRef(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      if (hasNavigated.current) return;
+      hasNavigated.current = true;
+      router.replace(NEXT_ROUTE);
+    }, SPLASH_DURATION_MS);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <Screen backgroundColor={COLORS.background}>

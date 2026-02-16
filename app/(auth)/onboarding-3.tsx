@@ -14,7 +14,7 @@ const PAGE_DOTS_ACTIVE_BLUE = '#2E8BEA';
 
 export default function Onboarding3Screen() {
   const onGetStarted = () => {
-    router.replace('/login' as import('expo-router').Href);
+    router.replace('/(public)/welcome' as import('expo-router').Href);
   };
 
   return (

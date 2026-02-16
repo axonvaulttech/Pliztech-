@@ -3,14 +3,7 @@ import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { z } from 'zod';
 
 import { FormTextInput } from '@/components/FormTextInput';
@@ -71,12 +64,7 @@ export default function LoginScreen() {
 
   return (
     <Screen backgroundColor={COLORS.background} scrollable>
-      <KeyboardAvoidingView
-        style={styles.keyboardView}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 24 : 0}
-      >
-        <View style={styles.content}>
+      <View style={styles.content}>
           {/* Logo + brand name (logo centered; Pliz left-aligned in content) */}
           <View style={styles.logoSection}>
             <Image source={LOGO} style={styles.logo} contentFit="contain" />
@@ -146,7 +134,9 @@ export default function LoginScreen() {
           </View>
 
           <View style={styles.divider}>
+            <View style={styles.dividerLine} />
             <Text style={styles.dividerText}>Or continue with</Text>
+            <View style={styles.dividerLine} />
           </View>
 
           <View style={styles.socialColumn}>
@@ -161,15 +151,11 @@ export default function LoginScreen() {
             </Pressable>
           </View>
         </View>
-      </KeyboardAvoidingView>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  keyboardView: {
-    flex: 1,
-  },
   content: {
     alignItems: 'center',
     paddingBottom: 32,
@@ -191,6 +177,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: COLORS.brandBlue,
     alignSelf: 'flex-start',
+    marginBottom: 8,
   },
   welcomeTitle: {
     fontSize: 26,
@@ -221,8 +208,17 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   divider: {
-    marginVertical: 24,
+    flexDirection: 'row',
     alignItems: 'center',
+    marginVertical: 24,
+    width: '100%',
+    gap: 12,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: COLORS.body,
+    opacity: 0.4,
   },
   dividerText: {
     fontSize: 14,

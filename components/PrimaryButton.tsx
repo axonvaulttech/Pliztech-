@@ -17,6 +17,8 @@ export interface PrimaryButtonProps {
   variant?: PrimaryButtonVariant;
   /** When variant="solid", background color (default: coral). Ignored when variant="gradient". */
   backgroundColor?: string;
+  /** When true, button is not clickable and appears disabled */
+  disabled?: boolean;
 }
 
 export function PrimaryButton({
@@ -25,15 +27,21 @@ export function PrimaryButton({
   accessibilityLabel = label,
   variant = 'gradient',
   backgroundColor = DEFAULT_SOLID_BG,
+  disabled = false,
 }: PrimaryButtonProps) {
   const isSolid = variant === 'solid';
 
   return (
     <Pressable
-      onPress={onPress}
-      style={({ pressed }) => [styles.button, pressed && styles.pressed]}
+      onPress={disabled ? undefined : onPress}
+      style={({ pressed }) => [
+        styles.button,
+        pressed && !disabled && styles.pressed,
+        disabled && styles.disabled,
+      ]}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
+      accessibilityState={{ disabled }}
     >
       {isSolid ? (
         <View style={[styles.gradient, { backgroundColor }]}>
@@ -62,6 +70,9 @@ const styles = StyleSheet.create({
   },
   pressed: {
     opacity: 0.9,
+  },
+  disabled: {
+    opacity: 0.5,
   },
   gradient: {
     flex: 1,
