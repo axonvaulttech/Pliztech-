@@ -1,10 +1,12 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import type { ComponentProps } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useState } from 'react';
+import { Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 const INPUT_HEIGHT = 56;
 const BORDER_RADIUS = 15;
 const BORDER_COLOR = '#D1D5DB';
+const HOVER_FOCUS_BORDER_COLOR = '#1766D1';
 const ERROR_COLOR = '#DC2626';
 const LABEL_COLOR = '#1F2937';
 const BODY_COLOR = '#6B7280';
@@ -36,8 +38,18 @@ export function FormTextInput({
   accessibilityLabel = label,
   ...inputProps
 }: FormTextInputProps) {
+  const [isFocused, setIsFocused] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+
   const showEyeToggle =
     onToggleSecure != null && (secureTextEntry === true || secureTextEntry === false);
+
+  const isActive = isFocused || isHovered;
+  const borderColor = error
+    ? ERROR_COLOR
+    : isActive
+      ? HOVER_FOCUS_BORDER_COLOR
+      : BORDER_COLOR;
 
   return (
     <View style={[styles.container, containerStyle]}>
@@ -45,8 +57,11 @@ export function FormTextInput({
       <View
         style={[
           styles.inputWrapper,
+          { borderColor },
           error ? styles.inputWrapperError : undefined,
         ]}
+        onMouseEnter={Platform.OS === 'web' ? () => setIsHovered(true) : undefined}
+        onMouseLeave={Platform.OS === 'web' ? () => setIsHovered(false) : undefined}
       >
         {leftIcon != null && (
           <Ionicons
@@ -63,6 +78,14 @@ export function FormTextInput({
           accessibilityLabel={accessibilityLabel}
           showSoftInputOnFocus={true}
           {...inputProps}
+          onFocus={(e) => {
+            setIsFocused(true);
+            inputProps.onFocus?.(e);
+          }}
+          onBlur={(e) => {
+            setIsFocused(false);
+            inputProps.onBlur?.(e);
+          }}
         />
         {showEyeToggle ? (
           <Pressable
