@@ -1,12 +1,14 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Link } from 'expo-router';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { ProgressBar } from '@/components/ProgressBar';
 
 import type { TrendingRequest } from '@/mock/home';
 
-const BRAND_BLUE = '#2E8BEA';
-const HEADING = '#1F2937';
-const BODY = '#6B7280';
+const ACCENT_BLUE = '#2196F3';
+const HEADING = '#333333';
+const BODY = '#888888';
+const DESCRIPTION = '#555555';
 
 function formatNaira(amount: number) {
   return `₦${amount.toLocaleString()}`;
@@ -14,61 +16,74 @@ function formatNaira(amount: number) {
 
 export interface RequestCardProps {
   request: TrendingRequest;
-  onPress: () => void;
 }
 
-export function RequestCard({ request, onPress }: RequestCardProps) {
-  const { name, initial, avatarColor, timeAgo, text, raised, goal, percent } = request;
+/**
+ * Uses Link asChild + TouchableOpacity for reliable iOS navigation.
+ * TouchableOpacity works better than Pressable inside ScrollView on iOS.
+ * Link asChild delegates navigation to expo-router's native linking.
+ */
+export function RequestCard({ request }: RequestCardProps) {
+  const { id, name, initial, avatarColor, timeAgo, text, raised, goal, percent } = request;
 
   return (
-    <Pressable
-      onPress={onPress}
-      style={({ pressed }) => [styles.card, pressed && styles.pressed]}
-      accessibilityRole="button"
-      accessibilityLabel={`Request by ${name}: ${text.slice(0, 50)}...`}
-    >
-      <View style={styles.topRow}>
-        <View style={[styles.avatar, { backgroundColor: avatarColor }]}>
-          <Text style={styles.avatarText}>{initial}</Text>
-        </View>
-        <Text style={styles.name} numberOfLines={1}>
-          {name}
-        </Text>
-        <Text style={styles.timeAgo}>{timeAgo}</Text>
-      </View>
+    <View style={styles.cardWrapper}>
+      <Link
+        href={{ pathname: '/(tabs)/request/[id]', params: { id } }}
+        asChild
+        push
+      >
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={styles.card}
+          accessibilityRole="button"
+          accessibilityLabel={`Request by ${name}: ${text.slice(0, 50)}...`}
+        >
+          <View style={styles.topRow}>
+            <View style={[styles.avatar, { backgroundColor: avatarColor }]}>
+              <Text style={[styles.avatarText, { color: '#FFFFFF' }]}>{initial}</Text>
+            </View>
+            <Text style={styles.name} numberOfLines={1}>
+              {name}
+            </Text>
+            <Text style={styles.timeAgo}>{timeAgo}</Text>
+          </View>
 
-      <Text style={styles.text} numberOfLines={3}>
-        {text}
-      </Text>
+          <Text style={styles.text} numberOfLines={3}>
+            {text}
+          </Text>
 
-      <View style={styles.amountRow}>
-        <Text style={styles.amount}>
-          {formatNaira(raised)} of {formatNaira(goal)}
-        </Text>
-        <Text style={styles.percent}>{percent}%</Text>
-      </View>
+          <View style={styles.amountRow}>
+            <Text style={styles.amount}>
+              {formatNaira(raised)} of {formatNaira(goal)}
+            </Text>
+            <Text style={styles.percent}>{percent}%</Text>
+          </View>
 
-      <ProgressBar percent={percent} />
-    </Pressable>
+          <ProgressBar percent={percent} trackColor="#EEEEEE" fillColor="#2196F3" />
+        </TouchableOpacity>
+      </Link>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 12,
+  cardWrapper: {
+    marginBottom: 13,
+    borderRadius: 15,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: '#E5E5E5',
+    backgroundColor: '#FFFFFF',
+    overflow: 'hidden',
+    padding: 24,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
   },
-  pressed: {
-    opacity: 0.95,
+  card: {
+    padding: 0,
   },
   topRow: {
     flexDirection: 'row',
@@ -86,7 +101,6 @@ const styles = StyleSheet.create({
   avatarText: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#FFFFFF',
   },
   name: {
     flex: 1,
@@ -100,7 +114,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    color: HEADING,
+    color: DESCRIPTION,
     lineHeight: 20,
     marginBottom: 12,
   },
@@ -108,15 +122,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 6,
   },
   amount: {
     fontSize: 14,
-    color: BODY,
+    color: HEADING,
   },
   percent: {
     fontSize: 14,
     fontWeight: '600',
-    color: BRAND_BLUE,
+    color: ACCENT_BLUE,
   },
 });

@@ -26,6 +26,7 @@ export default function ProfileScreen() {
         <Text style={styles.headerTitle}>My Profile</Text>
         <Pressable
           style={styles.headerButton}
+          onPress={() => router.push('/(tabs)/notifications')}
           accessibilityLabel="Notifications"
           accessibilityRole="button"
         >
@@ -44,7 +45,7 @@ export default function ProfileScreen() {
             icon="person-outline"
             title="Personal Information"
             subtitle="Edit your name, email, phone & change location"
-            onPress={() => {}}
+            onPress={() => router.push('/(tabs)/personal-info')}
             isLast
           />
         </ProfileSection>
@@ -77,13 +78,13 @@ export default function ProfileScreen() {
             icon="lock-closed-outline"
             title="Security"
             subtitle="Password & authentication"
-            onPress={() => {}}
+            onPress={() => router.push('/(tabs)/security-settings')}
           />
           <ProfileRow
             icon="settings-outline"
             title="Account Settings"
             subtitle="Preferences"
-            onPress={() => {}}
+            onPress={() => router.push('/(tabs)/account-settings')}
             isLast
           />
         </ProfileSection>

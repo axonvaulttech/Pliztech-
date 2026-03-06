@@ -24,32 +24,18 @@ const LOGO = require('@/assets/images/pliz-logo.png');
 export default function ActivityScreen() {
   const [activeTab, setActiveTab] = useState<ActivityType>('requests');
 
-  const handleRequestPress = useCallback((id: string) => {
-    router.push(`/(tabs)/request/${id}` as import('expo-router').Href);
-  }, []);
-
-  const handleGivingPress = useCallback((requestId: string) => {
-    router.push(`/(tabs)/request/${requestId}` as import('expo-router').Href);
-  }, []);
-
   const renderRequestItem = useCallback(
     ({ item }: { item: ActivityRequest }) => (
-      <ActivityRequestCard
-        request={item}
-        onPress={() => handleRequestPress(item.id)}
-      />
+      <ActivityRequestCard request={item} />
     ),
-    [handleRequestPress]
+    []
   );
 
   const renderGivingItem = useCallback(
     ({ item }: { item: GivingContribution }) => (
-      <GivingCard
-        contribution={item}
-        onPress={() => handleGivingPress(item.requestId)}
-      />
+      <GivingCard contribution={item} />
     ),
-    [handleGivingPress]
+    []
   );
 
   const ListHeader = (
@@ -132,6 +118,7 @@ export default function ActivityScreen() {
           (listData.length === 0 || activeTab === 'stories') && styles.listContentEmpty,
         ]}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       />
     </Screen>
   );

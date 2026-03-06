@@ -55,18 +55,11 @@ export default function BrowseScreen() {
     return list;
   }, [search, mainFilter, categoryFilter]);
 
-  const handleRequestPress = useCallback((id: string) => {
-    router.push(`/(tabs)/request/${id}` as import('expo-router').Href);
-  }, []);
-
   const renderItem = useCallback(
     ({ item }: { item: BrowseRequest }) => (
-      <BrowseRequestCard
-        request={item}
-        onPress={() => handleRequestPress(item.id)}
-      />
+      <BrowseRequestCard request={item} />
     ),
-    [handleRequestPress]
+    []
   );
 
   const ListHeader = useMemo(
@@ -108,6 +101,7 @@ export default function BrowseScreen() {
         ListHeaderComponent={ListHeader}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       />
     </Screen>
   );

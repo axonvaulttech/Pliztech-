@@ -1,6 +1,8 @@
 export const MOCK_PROFILE = {
   fullName: 'Michael Momoh',
   email: 'Momohmykael@gmail.com',
+  phone: '+234 816 732 6920',
+  location: 'Abuja, Nigeria',
   verified: true,
   role: 'Community Supporter',
   avatarColor: '#EF4444',

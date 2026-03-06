@@ -1,4 +1,4 @@
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { RequestCard } from './RequestCard';
 
@@ -10,21 +10,12 @@ const BRAND_BLUE = '#2E8BEA';
 export interface TrendingRequestsProps {
   requests: readonly TrendingRequest[];
   onSeeAll: () => void;
-  onRequestPress: (id: string) => void;
 }
 
 export function TrendingRequests({
   requests,
   onSeeAll,
-  onRequestPress,
 }: TrendingRequestsProps) {
-  const renderItem = ({ item }: { item: TrendingRequest }) => (
-    <RequestCard
-      request={item}
-      onPress={() => onRequestPress(item.id)}
-    />
-  );
-
   return (
     <View style={styles.section}>
       <View style={styles.headerRow}>
@@ -39,14 +30,11 @@ export function TrendingRequests({
         </Pressable>
       </View>
 
-      <FlatList
-        data={[...requests]}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-        scrollEnabled={false}
-        removeClippedSubviews={false}
-        contentContainerStyle={styles.listContent}
-      />
+      <View style={styles.listContent}>
+        {requests.map((item) => (
+          <RequestCard key={item.id} request={item} />
+        ))}
+      </View>
     </View>
   );
 }
@@ -59,7 +47,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 12,
+    marginBottom: 16,
   },
   sectionTitle: {
     fontSize: 18,

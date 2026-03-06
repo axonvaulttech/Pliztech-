@@ -8,7 +8,7 @@ const TAB_INACTIVE = '#6B7280';
 
 export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   const insets = useSafeAreaInsets();
-  const routes = state.routes.filter((r) => r.name !== 'request/[id]');
+  const routes = state.routes;
 
   return (
     <View style={[styles.container, { paddingBottom: Math.max(insets.bottom, 8) }]}>

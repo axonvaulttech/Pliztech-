@@ -1,3 +1,8 @@
+/**
+ * Mock data for development. All requests have string IDs ('1', '2', '3', '4')
+ * that map to detail views in mock/requests.ts via getRequestDetail(id).
+ * Replace with backend API calls when connecting to a real server.
+ */
 export const MOCK_USER = {
   firstName: 'Michael',
   role: 'Community Supporter',

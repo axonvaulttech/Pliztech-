@@ -1,27 +1,23 @@
-import { Tabs } from 'expo-router';
+import { Stack } from 'expo-router';
 
-import { CustomTabBar } from '@/components/CustomTabBar';
+export const unstable_settings = {
+  initialRouteName: '(main)',
+};
 
 export default function TabLayout() {
   return (
-    <Tabs
-      tabBar={(props) => <CustomTabBar {...props} />}
+    <Stack
       screenOptions={{
         headerShown: false,
-        sceneStyle: { flex: 1, backgroundColor: '#FFFFFF' },
+        contentStyle: { backgroundColor: '#FFFFFF' },
       }}
     >
-      <Tabs.Screen name="index" options={{ title: 'Home' }} />
-      <Tabs.Screen name="browse" options={{ title: 'Browse' }} />
-      <Tabs.Screen name="create" options={{ title: 'Create' }} />
-      <Tabs.Screen name="activity" options={{ title: 'Activity' }} />
-      <Tabs.Screen name="profile" options={{ title: 'Profile' }} />
-      <Tabs.Screen
-        name="request/[id]"
-        options={{
-          href: null,
-        }}
-      />
-    </Tabs>
+      <Stack.Screen name="(main)" options={{ headerShown: false }} />
+      <Stack.Screen name="request/[id]" options={{ headerShown: false, presentation: 'card' }} />
+      <Stack.Screen name="payment-cards" options={{ headerShown: false, presentation: 'card' }} />
+      <Stack.Screen name="personal-info" options={{ headerShown: false, presentation: 'card' }} />
+      <Stack.Screen name="edit-personal-info" options={{ headerShown: false, presentation: 'card' }} />
+      <Stack.Screen name="security-settings" options={{ headerShown: false, presentation: 'card' }} />
+    </Stack>
   );
 }

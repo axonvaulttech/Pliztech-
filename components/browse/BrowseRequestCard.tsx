@@ -1,14 +1,16 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Link } from 'expo-router';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { ProgressBar } from '@/components/ProgressBar';
 import { REQUEST_CATEGORIES } from '@/constants/categories';
 
 import type { BrowseRequest } from '@/mock/home';
 
-const BRAND_BLUE = '#2E8BEA';
-const HEADING = '#1F2937';
-const BODY = '#6B7280';
+const ACCENT_BLUE = '#2196F3';
+const HEADING = '#333333';
+const BODY = '#888888';
+const DESCRIPTION = '#555555';
 
 function formatNaira(amount: number) {
   return `₦${amount.toLocaleString()}`;
@@ -21,11 +23,12 @@ function getCategoryIcon(categoryId: string) {
 
 export interface BrowseRequestCardProps {
   request: BrowseRequest;
-  onPress: () => void;
+  onPress?: () => void;
 }
 
 export function BrowseRequestCard({ request, onPress }: BrowseRequestCardProps) {
   const {
+    id,
     name,
     initial,
     avatarColor,
@@ -42,12 +45,18 @@ export function BrowseRequestCard({ request, onPress }: BrowseRequestCardProps) 
   const categoryIcon = getCategoryIcon(categoryId);
 
   return (
-    <Pressable
-      onPress={onPress}
-      style={({ pressed }) => [styles.card, pressed && styles.pressed]}
-      accessibilityRole="button"
-      accessibilityLabel={`Request by ${name}: ${text.slice(0, 50)}...`}
+    <Link
+      href={{ pathname: '/(tabs)/request/[id]', params: { id } }}
+      asChild
+      push
     >
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={styles.card}
+        accessibilityRole="button"
+        accessibilityLabel={`Request by ${name}: ${text.slice(0, 50)}...`}
+        onPress={onPress}
+      >
       <View style={styles.topRow}>
         <View style={styles.left}>
           <View style={[styles.avatar, { backgroundColor: avatarColor }]}>
@@ -90,27 +99,25 @@ export function BrowseRequestCard({ request, onPress }: BrowseRequestCardProps) 
         <Text style={styles.percent}>{percent}%</Text>
       </View>
 
-      <ProgressBar percent={percent} />
-    </Pressable>
+      <ProgressBar percent={percent} trackColor="#EEEEEE" fillColor="#2196F3" />
+    </TouchableOpacity>
+    </Link>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 12,
+    borderRadius: 15,
+    padding: 24,
+    marginBottom: 13,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: '#E5E5E5',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    elevation: 3,
-  },
-  pressed: {
-    opacity: 0.95,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
   },
   topRow: {
     flexDirection: 'row',
@@ -184,7 +191,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    color: HEADING,
+    color: DESCRIPTION,
     lineHeight: 20,
     marginBottom: 12,
   },
@@ -192,7 +199,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 6,
   },
   amount: {
     fontSize: 14,
@@ -205,6 +212,6 @@ const styles = StyleSheet.create({
   percent: {
     fontSize: 14,
     fontWeight: '600',
-    color: BRAND_BLUE,
+    color: ACCENT_BLUE,
   },
 });
