@@ -7,14 +7,9 @@ import { SecondaryButton } from '@/components/SecondaryButton';
 
 const WELCOME_BG = require('@/assets/images/welcome-bg.png');
 
-const COLORS = {
-  brandBlue: '#2E8BEA',
-  white: '#FFFFFF',
-} as const;
-
 const SPACING = {
-  brandToTagline: 8,
-  taglineToButtons: 20,
+  mottoToSub: 12,
+  subToButtons: 20,
   buttonGap: 12,
 } as const;
 
@@ -30,9 +25,13 @@ export default function WelcomeScreen() {
   return (
     <BackgroundImageScreen source={WELCOME_BG}>
       <View style={styles.stack}>
-        <Text style={styles.brand}>PLIZ</Text>
-        <Text style={styles.tagline}>
-          You ask because you&apos;re human{'\n'}You give because you&apos;re humane
+        <Text style={styles.motto}>
+          You ask because you&apos;re <Text style={styles.mottoHighlight}>human</Text>
+          {'\n'}
+          You give because you&apos;re <Text style={styles.mottoHighlight}>humane</Text>
+        </Text>
+        <Text style={styles.subDescription}>
+          Join a community where small acts of kindness make a world of difference
         </Text>
         <View style={styles.buttons}>
           <PrimaryButton
@@ -57,19 +56,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexShrink: 1,
   },
-  brand: {
-    fontSize: 32,
+  motto: {
+    fontSize: 20,
     fontWeight: '700',
-    color: COLORS.brandBlue,
-    marginBottom: SPACING.brandToTagline,
-  },
-  tagline: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: COLORS.white,
+    color: '#FFFFFF',
     textAlign: 'center',
-    lineHeight: 24,
-    marginBottom: SPACING.taglineToButtons,
+    lineHeight: 28,
+    marginBottom: SPACING.mottoToSub,
+  },
+  mottoHighlight: {
+    color: '#60A5FA',
+  },
+  subDescription: {
+    fontSize: 15,
+    fontWeight: '500',
+    color: '#D1D5DB',
+    textAlign: 'center',
+    lineHeight: 22,
+    marginBottom: SPACING.subToButtons,
   },
   buttons: {
     width: '100%',

@@ -5,7 +5,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 const HEIGHT = 56;
 const BORDER_RADIUS = 999;
 
-const GRADIENT_COLORS = ['#2E8BEA', '#172033'] as const;
+const GRADIENT_COLORS = ['#1a5a9e', '#2E8BEA'] as const; // darker left → lighter right
 const DEFAULT_SOLID_BG = '#E07A5F'; // coral/salmon
 
 export type PrimaryButtonVariant = 'gradient' | 'solid';
