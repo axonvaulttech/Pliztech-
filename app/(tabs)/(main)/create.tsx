@@ -242,7 +242,13 @@ export default function CreateScreen() {
       return;
     }
 
-    if (!promptDonationRequestReadiness(user)) {
+    const amountRequestedNgn = parseAmountInput(data.amount);
+    if (amountRequestedNgn == null) {
+      Alert.alert('Amount required', 'Enter a valid amount.');
+      return;
+    }
+
+    if (!promptDonationRequestReadiness(user, amountRequestedNgn)) {
       return;
     }
 
@@ -263,11 +269,15 @@ export default function CreateScreen() {
     const data = pendingSubmit;
     if (!data || isSubmitting) return;
 
-    if (!promptDonationRequestReadiness(user)) {
+    const amountRequested = parseAmountInput(data.amount);
+    if (amountRequested == null) {
+      Alert.alert('Amount required', 'Enter a valid amount.');
       return;
     }
 
-    const amountRequested = Number(data.amount.replace(/,/g, ''));
+    if (!promptDonationRequestReadiness(user, amountRequested)) {
+      return;
+    }
     const descriptionForApi = clampBegDescriptionForApi(data.description);
     const expiryHours = Number(data.expiryHours) as BegExpiryHours;
 
